@@ -21,6 +21,31 @@ atoi:
 .done:
     ret
 
+is_prime:
+    cmp rdi, 2
+    jl not_prime
+    je is_p
+    test rdi, 1
+    jz not_prime
+    mov rcx, 3
+.loop:
+    mov rax, rdi
+    xor rdx, rdx
+    div rcx
+    test rdx, rdx
+    jz not_prime
+    add rcx, 2
+    mov rax, rcx
+    imul rax, rax
+    cmp rax, rdi
+    jle .loop
+is_p:
+    mov rax, 1
+    ret
+not_prime:
+    xor rax, rax
+    ret
+
 _start:
     mov rax, 0
     mov rdi, 0
@@ -29,6 +54,8 @@ _start:
     syscall
     mov rdi, buf
     call atoi
+    mov rdi, rax
+    call is_prime
     mov rax, 60
     xor rdi, rdi
     syscall
