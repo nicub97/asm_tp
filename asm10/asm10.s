@@ -21,6 +21,18 @@ atoi:
 .done:
     ret
 
+find_max:
+    mov rax, r12
+    cmp r13, rax
+    jle .check2
+    mov rax, r13
+.check2:
+    cmp r14, rax
+    jle .done
+    mov rax, r14
+.done:
+    ret
+
 _start:
     cmp qword [rsp], 4
     jl fail
@@ -33,6 +45,8 @@ _start:
     mov rdi, [rsp+32]
     call atoi
     mov r14, rax
+    call find_max
+    mov r15, rax
     mov rax, 60
     xor rdi, rdi
     syscall
