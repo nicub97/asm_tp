@@ -21,11 +21,26 @@ atoi:
 .done:
     ret
 
+sum_below:
+    xor rax, rax
+    xor rcx, rcx
+.loop:
+    inc rcx
+    cmp rcx, rdi
+    jge .done
+    add rax, rcx
+    jmp .loop
+.done:
+    ret
+
 _start:
     cmp qword [rsp], 2
     jl fail
     mov rdi, [rsp+16]
     call atoi
+    mov rdi, rax
+    call sum_below
+    mov r12, rax
     mov rax, 60
     xor rdi, rdi
     syscall
