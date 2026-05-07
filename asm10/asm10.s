@@ -26,6 +26,13 @@ _start:
     jl fail
     mov rdi, [rsp+16]
     call atoi
+    mov r12, rax
+    mov rdi, [rsp+24]
+    call atoi
+    mov r13, rax
+    mov rdi, [rsp+32]
+    call atoi
+    mov r14, rax
     mov rax, 60
     xor rdi, rdi
     syscall
