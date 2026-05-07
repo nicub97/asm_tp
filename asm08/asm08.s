@@ -33,6 +33,28 @@ sum_below:
 .done:
     ret
 
+itoa:
+    mov rax, rdi
+    mov rcx, buf+31
+    mov byte [rcx], 10
+    dec rcx
+    mov r8, rcx
+.loop:
+    xor rdx, rdx
+    mov r9, 10
+    div r9
+    add dl, '0'
+    mov [rcx], dl
+    dec rcx
+    test rax, rax
+    jnz .loop
+    inc rcx
+    mov rsi, rcx
+    mov rdx, r8
+    sub rdx, rcx
+    add rdx, 2
+    ret
+
 _start:
     cmp qword [rsp], 2
     jl fail
@@ -40,7 +62,11 @@ _start:
     call atoi
     mov rdi, rax
     call sum_below
-    mov r12, rax
+    mov rdi, rax
+    call itoa
+    mov rax, 1
+    mov rdi, 1
+    syscall
     mov rax, 60
     xor rdi, rdi
     syscall
