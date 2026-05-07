@@ -56,6 +56,12 @@ _start:
     call atoi
     mov rdi, rax
     call is_prime
+    test rax, rax
+    jz fail
     mov rax, 60
     xor rdi, rdi
+    syscall
+fail:
+    mov rax, 60
+    mov rdi, 1
     syscall
